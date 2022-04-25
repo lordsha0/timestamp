@@ -26,8 +26,11 @@ app.get("/api/hello", function (req, res) {
 });
 
 app.get("/api/:date", function(req,res) {
-  let paramDate = req.params.date  
-  
+  let paramDate = req.params.date
+  if(!paramDate.includes('-')) {
+    paramDate = parseInt(paramDate)
+  }
+
   let utcFormat = new Date(paramDate)
   
   let unixFormat = new Date(paramDate)
@@ -38,6 +41,6 @@ app.get("/api/:date", function(req,res) {
 });
 
 // listen for requests :)
-var listener = app.listen(9999, function () {
+var listener = app.listen(process.env.PORT, function () {
   console.log('Your app is listening on port ' + listener.address().port);
 });
